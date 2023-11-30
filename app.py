@@ -34,11 +34,11 @@ prev_twelve_months = '2016-08-23'
 @app.route("/")
 def intro():
     return (
-        f"<p>Climate Analysis API:"
-        f"/api/v1.0/precipitation"
-        f"/api/v1.0/station"
-        f"/api/v1.0/tobs"
-        f"/api/v1.0/<date>"
+        f"<p>Climate Analysis API:<br/>"
+        f"/api/v1.0/precipitation<br/>"
+        f"/api/v1.0/station<br/>"
+        f"/api/v1.0/tobs<br/>"
+        f"/api/v1.0/<date><br/>"
         f"/api/v1.0/<start>/<end>"
         )
 # Query a list for Precipitation Analysis #
@@ -65,14 +65,14 @@ def tobs():
     return jsonify (tobs)
 # Query a list for the start route 
 @app.route("/api/v1.0/<date>")
-def start_date(date):
+def temp(date):
     day_temp = session.query(func.min(Measurement.tobs),func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
     filter(Measurement.date >= date).all()
     temp = list(np.ravel(day_temp))
     return jsonify(temp)
 # Query a list for the start and end route 
 @app.route("/api/v1.0/<start>/<end>")
-def start_end_date (start,end):
+def results (start,end):
     start_end_results = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
     filter(Measurement.date >= start).filter(Measurement.date <= end).all()
     results = list(np.ravel(start_end_results))
